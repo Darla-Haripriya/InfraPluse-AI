@@ -1,0 +1,52 @@
+[
+  {
+    "step": 1,
+    "interaction_label": "Interaction 1: Zero Memory (Cold State)",
+    "scenario_title": "First Incident Encountered: Redis Connection Pool Saturation",
+    "description": "The agent has no prior context on RazorPay or Maya Krishnan's architecture. It gives a textbook SRE answer that would cause an outage.",
+    "ticket_id": "TICK-101",
+    "without_memory_response": {
+      "recommendation": "Execute standard Kubernetes restart: `kubectl rollout restart deployment redis-orders-cache` and check pod memory utilization.",
+      "risk_level": "CRITICAL RISK (UNNOTICED BY GENERIC AI)",
+      "consequence": "Would cause a 48-minute cascading database blackout, dropping 48,000 transactions and losing $300k+ in processing volume."
+    },
+    "user_feedback_action": "Lead SRE Maya intervenes manually: 'DO NOT RESTART. It caused a catastrophic outage on June 12 (INC-402). Always scale down checkout workers first, unlink stale keys, and canary drain!'",
+    "hindsight_action": "retain(incident_id='INC-402', rule='Never cold-restart redis-orders-cache between 09:00-15:00 IST without throttling workers first')",
+    "agent_evolution": "Cold state. Learned critical negative constraint from human feedback."
+  },
+  {
+    "step": 2,
+    "interaction_label": "Interaction 3: Preference & Constraint Recall",
+    "scenario_title": "Second Incident: Redis Latency Spike & Lock Contention",
+    "description": "Two weeks later, another engineer encounters Redis latency on the same cluster during morning business hours.",
+    "ticket_id": "TICK-101",
+    "hindsight_action": "recall(query='redis-orders-cache connection timeout razorpay')",
+    "with_memory_response": {
+      "recalled_memory": "MEM-001 (INC-402): Catastrophic database cascade when restarted during morning traffic. Maya Krishnan rule: Zero cold restarts between 09:00-15:00 IST.",
+      "agent_recommendation": "HALT: Do NOT execute rollout restart. Recalled INC-402 where restarting caused cascading database failure. Execute verified safe protocol: 1) Scale worker replicas down to 3, 2) Unlink stale session keys, 3) Perform canary drain with 20% traffic slices.",
+      "risk_mitigated": "Prevented repeat $300k downtime incident."
+    },
+    "agent_evolution": "Recalls specific account constraints, team preferences, and past failed commands."
+  },
+  {
+    "step": 3,
+    "interaction_label": "Interaction 5: Pattern Identification & Root Cause Synthesis",
+    "scenario_title": "Pattern Recognition Across Microservices: High Ingress Contention",
+    "description": "After encountering incidents across Redis, Envoy ingress, and Kafka settlement, the agent runs Hindsight reflection.",
+    "hindsight_action": "reflect(memory_bank='mb_infrapulse_sre_prod_01', topic='recurring connection pool failures')",
+    "reflection_insight": "Systemic Reflection Generated: Across 4 past incidents, memory saturation on Redis and PgBouncer occurs strictly when checkout ingress RPS exceeds 12,500 while batch settlement workers are active. The root vulnerability is unbuffered gRPC ingress storms, not pod memory sizing.",
+    "agent_evolution": "Connects multi-incident symptoms into systemic architectural insights."
+  },
+  {
+    "step": 4,
+    "interaction_label": "Interaction 10: Proactive Autonomous Prevention",
+    "scenario_title": "Proactive Intervention Before Outage Occurs",
+    "description": "Traffic begins climbing at 08:45 IST on a Monday morning. Metrics approach 11,800 RPS.",
+    "hindsight_action": "recall(query='morning traffic threshold batch settlement collision')",
+    "with_memory_response": {
+      "proactive_action": "PROACTIVE SRE INTERVENTION: Ingress traffic has reached 11,800 RPS (85% of INC-402 failure threshold). Based on accumulated experience and reflection #REF-08, proactively pre-warming secondary Redis cache replicas and temporarily pausing non-critical settlement cron job until 11:30 IST. Maya Krishnan notified.",
+      "result": "Zero alerts fired. Outage completely prevented before customer impact."
+    },
+    "agent_evolution": "Experienced AI Team Member: Shifts from reactive troubleshooting to autonomous predictive prevention."
+  }
+]

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "CUST-001",
+    "name": "RazorPay Financial Networks",
+    "tier": "Tier-1 Enterprise VIP",
+    "region": "ap-south-1 (Mumbai)",
+    "monthly_burn_rate": "$140,000",
+    "sla_uptime_target": "99.995%",
+    "infra_stack": "EKS 1.30, Redis Cluster 7.2, Aurora PostgreSQL 16.1, Kafka 3.6",
+    "lead_sre": "Maya Krishnan (Principal SRE)",
+    "constraints": "Zero hard restarts on payment clusters between 09:00 - 15:00 IST. Must canary drain with 20% traffic slices. PCI-DSS Level 1 compliance."
+  },
+  {
+    "id": "CUST-002",
+    "name": "HealthGuard MedCloud",
+    "tier": "Tier-1 Enterprise VIP",
+    "region": "us-east-1 (N. Virginia)",
+    "monthly_burn_rate": "$210,000",
+    "sla_uptime_target": "99.999%",
+    "infra_stack": "GKE Enterprise, Cloud Spanner, Redis Sentinel, Envoy Mesh",
+    "lead_sre": "Dr. Aris Vance (Director of Cloud Ops)",
+    "constraints": "HIPAA strict audit. Staging to prod promotions require dual signature. Never flush Redis cache without warm replay."
+  },
+  {
+    "id": "CUST-003",
+    "name": "Nexus Logistics Global",
+    "tier": "Tier-1 Enterprise",
+    "region": "eu-central-1 (Frankfurt)",
+    "monthly_burn_rate": "$95,000",
+    "sla_uptime_target": "99.99%",
+    "infra_stack": "AKS 1.29, Azure CosmosDB, RabbitMQ, Nginx Ingress",
+    "lead_sre": "Jonas Richter (Staff DevOps)",
+    "constraints": "Batch dispatch jobs run hourly. RabbitMQ queues cannot exceed 100k messages or workers drop dead."
+  },
+  {
+    "id": "CUST-004",
+    "name": "AetherStream Media",
+    "tier": "Tier-2 High-Growth",
+    "region": "us-west-2 (Oregon)",
+    "monthly_burn_rate": "$180,000",
+    "sla_uptime_target": "99.95%",
+    "infra_stack": "AWS ECS Fargate, CloudFront CDN, DynamoDB, ElastiCache Valkey",
+    "lead_sre": "Chloe Chen (Lead Infrastructure Eng)",
+    "constraints": "Live broadcast transcoding pipelines are delay-sensitive. Max allowed latency jitter is 12ms."
+  },
+  {
+    "id": "CUST-005",
+    "name": "FinEdge Trading Engine",
+    "tier": "Tier-1 Mission Critical",
+    "region": "ap-southeast-1 (Singapore)",
+    "monthly_burn_rate": "$320,000",
+    "sla_uptime_target": "99.999%",
+    "infra_stack": "Bare-metal Kubernetes, Solarflare Mellanox NICs, Aerospike, ClickHouse",
+    "lead_sre": "Vikram Sethi (Head of Quant Infra)",
+    "constraints": "Microsecond latency tolerance. Kernel bypass active. Never execute apt upgrades or restart network interfaces during market hours (09:00 - 17:00 SGT)."
+  },
+  {
+    "id": "CUST-006",
+    "name": "OmniRetail eCommerce",
+    "tier": "Tier-1 Enterprise",
+    "region": "us-central1 (Iowa)",
+    "monthly_burn_rate": "$160,000",
+    "sla_uptime_target": "99.99%",
+    "infra_stack": "GKE Autopilot, Google Memorystore, Cloud SQL Postgres",
+    "lead_sre": "Sarah Jenkins (Senior Reliability Eng)",
+    "constraints": "Flash sales occur Friday evenings. Database connection pooling must be capped at 1,200 active threads."
+  },
+  {
+    "id": "CUST-007",
+    "name": "BioSynthetix Genomics",
+    "tier": "Tier-2 Enterprise",
+    "region": "eu-west-1 (Ireland)",
+    "monthly_burn_rate": "$115,000",
+    "sla_uptime_target": "99.95%",
+    "infra_stack": "Slurm HPC Cluster, Ceph Distributed Storage, Rocky Linux 9, Nextflow",
+    "lead_sre": "Eamon Walsh (HPC Systems Admin)",
+    "constraints": "Sequencing pipelines run 72-hour jobs. Never unmount Ceph OSD drives without drain approval."
+  },
+  {
+    "id": "CUST-008",
+    "name": "OrbitTelematics Fleet",
+    "tier": "Tier-2 Enterprise",
+    "region": "sa-east-1 (São Paulo)",
+    "monthly_burn_rate": "$75,000",
+    "sla_uptime_target": "99.9%",
+    "infra_stack": "AWS IoT Core, TimescaleDB, Kinesis Streams, Go Microservices",
+    "lead_sre": "Mateo Silva (Platform Architect)",
+    "constraints": "IoT telemetry ingests 50k packets/sec. Dropped packets trigger fleet anomaly alerts."
+  },
+  {
+    "id": "CUST-009",
+    "name": "GovSecure Identity Hub",
+    "tier": "Tier-1 Sovereign Compliance",
+    "region": "ap-south-2 (Hyderabad)",
+    "monthly_burn_rate": "$250,000",
+    "sla_uptime_target": "99.999%",
+    "infra_stack": "Air-gapped OpenShift, HashiCorp Vault, PostgreSQL High Availability",
+    "lead_sre": "Rajesh Varma (Chief Security Architect)",
+    "constraints": "Zero internet egress. HSM authentication mandatory. Root SSH completely disabled."
+  },
+  {
+    "id": "CUST-010",
+    "name": "CloudFleet Mobility",
+    "tier": "Tier-2 SaaS",
+    "region": "ap-northeast-1 (Tokyo)",
+    "monthly_burn_rate": "$88,000",
+    "sla_uptime_target": "99.95%",
+    "infra_stack": "EKS 1.30, CockroachDB, NATS JetStream, Envoy Gateway",
+    "lead_sre": "Kenji Sato (Lead SRE)",
+    "constraints": "EV charging grid relies on real-time heartbeat. Timeout threshold is 2,000ms."
+  }
+]

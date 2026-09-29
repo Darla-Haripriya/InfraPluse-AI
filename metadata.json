@@ -1,0 +1,6 @@
+{
+  "name": "InfraPulse AI - Hindsight SRE Agent",
+  "description": "Enterprise IT Infrastructure Support & SRE Agent powered by Hindsight Cloud memory. Learns from incident logs, past failed commands, and resolution outcomes to prevent repeat downtime.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

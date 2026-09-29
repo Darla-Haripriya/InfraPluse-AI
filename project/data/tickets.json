@@ -1,0 +1,71 @@
+[
+  {
+    "ticket_id": "TICK-101",
+    "customer_id": "CUST-001",
+    "customer_name": "RazorPay Financial Networks",
+    "server_id": "prod-mumbai-redis-cache-03",
+    "severity": "P1 - Critical Outage Threat",
+    "title": "High 504 Gateway Timeout on /v2/checkout with Redis connection pool exhaustion",
+    "alert_source": "Datadog / Prometheus AlertManager",
+    "error_logs": "ERROR 2026-09-28 08:30:14 [checkout-service] ConnectionPoolTimeoutException: Timeout waiting for idle object in pool from redis-orders-cache.internal:6379 (active=256, max=256, wait_queue=1849)\nWARN 2026-09-28 08:30:16 [payment-worker] CircuitBreaker OPEN for RedisClusterEndpoint",
+    "current_metrics": {
+      "cpu_usage": "94.2%",
+      "memory_usage": "88.7%",
+      "active_connections": 256,
+      "max_connections": 256,
+      "request_rate": "14,800 rps",
+      "p99_latency_ms": 1420
+    },
+    "default_runbook_action": "kubectl rollout restart deployment redis-orders-cache"
+  },
+  {
+    "ticket_id": "TICK-102",
+    "customer_id": "CUST-005",
+    "customer_name": "FinEdge Trading Engine",
+    "server_id": "sg-quant-node-08.hft.internal",
+    "severity": "P0 - Active Trading Degradation",
+    "title": "Mellanox NIC driver packet drops detected on eth0 during morning trading surge",
+    "alert_source": "Solarflare Onload Telemetry Monitor",
+    "error_logs": "kernel: [41920.841] mlx5_core 0000:04:00.0 eth0: rx_out_of_buffer dropped 48102 packets in last 10s\nWARN: Trading order transit latency exceeded 150us threshold (current: 1.84ms)",
+    "current_metrics": {
+      "packet_drop_rate": "4.8%",
+      "rx_ring_buffer": "1024 / 4096",
+      "cpu_core_14_load": "98%",
+      "market_status": "OPEN (09:45 SGT)"
+    },
+    "default_runbook_action": "systemctl restart systemd-networkd"
+  },
+  {
+    "ticket_id": "TICK-103",
+    "customer_id": "CUST-003",
+    "customer_name": "Nexus Logistics Global",
+    "server_id": "eu-rabbit-cluster-broker-02",
+    "severity": "P2 - Degrading Queue Ingress",
+    "title": "RabbitMQ memory alarm blocked incoming telemetry dispatch events",
+    "alert_source": "Azure Monitor & RabbitMQ Management",
+    "error_logs": "rabbit@broker-02: vm_memory_high_watermark reached (5.8GB / 6.0GB limit). Ingress socket throttling applied to channel 14-88.\nWARN: 110,000 telemetry messages waiting in memory queue.",
+    "current_metrics": {
+      "memory_watermark": "96.4%",
+      "unacknowledged_messages": 112000,
+      "consumer_count": 4,
+      "inbound_rate": "4,200 msg/sec"
+    },
+    "default_runbook_action": "rabbitmqctl purge_queue dispatch_telemetry_queue"
+  },
+  {
+    "ticket_id": "TICK-104",
+    "customer_id": "CUST-007",
+    "customer_name": "BioSynthetix Genomics",
+    "server_id": "hpc-storage-rack4-osd12",
+    "severity": "P1 - Storage IO Blocked",
+    "title": "Ceph OSD degraded warning with 4 OSDs reporting intermittent heartbeat loss",
+    "alert_source": "Ceph Dashboard & Prometheus",
+    "error_logs": "cluster [WRN] 4 osds down, 14 pgs incomplete, 120 pgs degraded\nmon.0 [ERR] osd.12 reported heartbeat fail on 10.240.12.18:6804",
+    "current_metrics": {
+      "active_sequencing_jobs": 14,
+      "cluster_io_wait": "72%",
+      "degraded_data_percent": "6.4%"
+    },
+    "default_runbook_action": "ceph osd out 12 13 14 15"
+  }
+]
